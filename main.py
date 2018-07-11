@@ -3,36 +3,28 @@ import tkinter
 class Application(tkinter.Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        root.geometry("800x150")
         self.pack()
         self.create_widgets()
 
     def create_widgets(self):
-        self.hi_there = tkinter.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side="top")
+        self.winfo_toplevel().title("Math Program")
+        self.L1 = tkinter.Label(self, text = "Base number")
+        self.baseNum = tkinter.Entry(self, width="10")
+        self.L2 = tkinter.Label(self, text = "Exponent")
+        self.expNum = tkinter.Entry(self, width="10")
+        self.submit = tkinter.Button(self, text="Exponentiate", command=self.submitText)
+        self.product = tkinter.Label(self)
+        self.L1.grid(row=0)
+        self.baseNum.grid(row=0, column=1)
+        self.L2.grid(row=1)
+        self.expNum.grid(row=1, column=1)
+        self.submit.grid(row=2)
+        self.product.grid(row=3)
 
-        self.resize = tkinter.Button(self)
-        self.resize["text"] = "This window is so tiny pls click to make it usable"
-        self.resize["command"] = self.resizeToUsableSize
-        self.resize.pack(side="left")
+    def submitText(self):
+        self.product["text"] = "Answer: " + str((int(self.baseNum.get())**int(self.expNum.get())))
 
-        self.quit = tkinter.Button(self, text="QUIT", fg="red",
-                              command=root.destroy)
-        self.quit.pack(side="bottom")
-
-    def say_hi(self):
-        print("hi there, everyone!")
-
-    def resizeToUsableSize(self):
-        root.geometry("500x500")
-        self.resize["text"] = "Alright you can make it small again if you want"
-        self.resize["command"] = self.makeItSmall
-
-    def makeItSmall(self):
-        root.geometry("300x90")
-        self.resize["text"] = "This window is so tiny pls click to make it usable"
-        self.resize["command"] = self.resizeToUsableSize
 
 root = tkinter.Tk()
 app = Application(master=root)
