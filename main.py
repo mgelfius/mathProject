@@ -1,4 +1,5 @@
 import tkinter
+import math
 
 class Application(tkinter.Frame):
     def __init__(self, master=None):
@@ -19,8 +20,10 @@ class Application(tkinter.Frame):
     def create_widgets(self):
         expButton = tkinter.Button(self.headerFrame, text="Calculate Exponent", command=self.build_exp)
         fibButton = tkinter.Button(self.headerFrame, text="Calculate Fib Number", command=self.build_fib)
+        angButton = tkinter.Button(self.headerFrame, text="Calculate Angle", command=self.build_ang)
         expButton.grid(row=0)
         fibButton.grid(row=0, column=1)
+        angButton.grid(row=0, column=2)
 
     def build_exp(self):
         self.clearFrame(self.calcFrame)
@@ -48,6 +51,25 @@ class Application(tkinter.Frame):
         calcFib.grid(row=2)
         self.final.grid(row=3)
 
+    def build_ang(self):
+        self.clearFrame(self.calcFrame)
+        self.v = tkinter.IntVar()
+        L1 = tkinter.Label(self.calcFrame, text="Angle in radians")
+        self.angNum = tkinter.Entry(self.calcFrame, width="5")
+        self.sinRadio = tkinter.Radiobutton(self.calcFrame, text="Sin", value=1, width=10, variable=self.v)
+        self.cosRadio = tkinter.Radiobutton(self.calcFrame, text="Cos", value=2, width=10, variable=self.v)
+        self.tanRadio = tkinter.Radiobutton(self.calcFrame, text="Tan", value=3, width=10, variable=self.v)
+        self.v.set(1)
+        calcAngle = tkinter.Button(self.calcFrame, text="Calculate", command=self.calculateAng)
+        self.answer = tkinter.Label(self.calcFrame)
+        L1.grid(row = 1)
+        self.angNum.grid(row=1, column=1)
+        self.sinRadio.grid(row=2, column=0)
+        self.cosRadio.grid(row=2, column=1)
+        self.tanRadio.grid(row=2, column=2)
+        calcAngle.grid(row=3)
+        self.answer.grid(row=4)
+
     def calculateExpMethod(self):
         self.product["text"] = "Answer: " + str((int(self.baseNum.get())**int(self.expNum.get())))
 
@@ -55,6 +77,18 @@ class Application(tkinter.Frame):
         n = int(self.fibNum.get())
         answer = self.fib(n)
         self.final["text"] = "Answer: " + str(answer)
+
+    def calculateAng(self):
+        if self.v.get() == 1:
+            final = math.sin(float(self.angNum.get()))
+            self.answer["text"] = "Sine of " + self.angNum.get() + ": " + str(final)
+        if self.v.get() == 2:
+            final = math.cos(float(self.angNum.get()))
+            self.answer["text"] = "Cosine of " + self.angNum.get() + ": " + str(final)
+        if self.v.get() == 3:
+            final = math.tan(float(self.angNum.get()))
+            self.answer["text"] = "Tangent of " + self.angNum.get() + ": " + str(final)
+        
 
     def fib(self, n):
         if n == 0:
