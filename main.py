@@ -3,24 +3,27 @@ import tkinter
 class Application(tkinter.Frame):
     def __init__(self, master=None):
         super().__init__(master)
-        #root.geometry("800x150")
         self.winfo_toplevel().title("Math Program")
+        root.resizable(0, 0)
         self.pack()
+        self.headerFrame = tkinter.Frame()
+        self.headerFrame.pack()
         self.create_widgets()
         self.calcFrame = tkinter.Frame()
         self.calcFrame.pack()
 
+    def clearFrame(self, frame):
+        for widget in frame.winfo_children():
+            widget.destroy()
+
     def create_widgets(self):
-        headerFrame = tkinter.Frame()
-        headerFrame.pack()
-        expButton = tkinter.Button(headerFrame, text="Calculate Exponent", command=self.build_exp)
-        fibButton = tkinter.Button(headerFrame, text="Calculate Fib Number", command=self.build_fib)
+        expButton = tkinter.Button(self.headerFrame, text="Calculate Exponent", command=self.build_exp)
+        fibButton = tkinter.Button(self.headerFrame, text="Calculate Fib Number", command=self.build_fib)
         expButton.grid(row=0)
         fibButton.grid(row=0, column=1)
 
     def build_exp(self):
-        for widget in self.calcFrame.winfo_children():
-            widget.destroy()
+        self.clearFrame(self.calcFrame)
         L1 = tkinter.Label(self.calcFrame, text = "Base number")
         self.baseNum = tkinter.Entry(self.calcFrame, width="10")
         L2 = tkinter.Label(self.calcFrame, text = "Exponent")
@@ -35,8 +38,7 @@ class Application(tkinter.Frame):
         self.product.grid(row=4)
 
     def build_fib(self):
-        for widget in self.calcFrame.winfo_children():
-            widget.destroy()
+        self.clearFrame(self.calcFrame)
         L1 = tkinter.Label(self.calcFrame, text="Index of Fibonacci")
         self.fibNum = tkinter.Entry(self.calcFrame, width="10")
         calcFib = tkinter.Button(self.calcFrame, text="Find Fibonacci", command=self.calculateFib)
