@@ -79,14 +79,15 @@ class Application(tkinter.Frame):
         self.final["text"] = "Answer: " + str(answer)
 
     def calculateAng(self):
+        passMath = self.readMath(self.angNum.get())
         if self.v.get() == 1:
-            final = math.sin(float(self.angNum.get()))
+            final = math.sin(passMath)
             self.answer["text"] = "Sine of " + self.angNum.get() + ": " + str(final)
         if self.v.get() == 2:
-            final = math.cos(float(self.angNum.get()))
+            final = math.cos(passMath)
             self.answer["text"] = "Cosine of " + self.angNum.get() + ": " + str(final)
         if self.v.get() == 3:
-            final = math.tan(float(self.angNum.get()))
+            final = math.tan(passMath)
             self.answer["text"] = "Tangent of " + self.angNum.get() + ": " + str(final)
         
 
@@ -99,6 +100,9 @@ class Application(tkinter.Frame):
             return 1
         else:
             return self.fib(n - 2) + self.fib(n - 1)
+
+    def readMath(self, passMath):
+        return eval(passMath.lower().replace('pi', 'math.pi'))
 
 
 root = tkinter.Tk()
