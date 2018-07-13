@@ -148,7 +148,7 @@ class Application(tkinter.Frame):
                 denom = denom/i
         num = round(num)
         denom = round(denom)
-        self.reduceFinal["text"] = "Reduced: " + str(num) + '/' + str(denom)
+        self.reduceFinal["text"] = "Reduced: " + str("{:,}".format(num)) + '/' + str("{:,}".format(denom))
 
 root = tkinter.Tk()
 app = Application(master=root)
