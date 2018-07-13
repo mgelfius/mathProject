@@ -25,9 +25,11 @@ class Application(tkinter.Frame):
         expButton = tkinter.Button(self.headerFrame, text="Calculate Exponent", command=self.build_exp)
         fibButton = tkinter.Button(self.headerFrame, text="Calculate Fib Number", command=self.build_fib)
         angButton = tkinter.Button(self.headerFrame, text="Calculate Angle", command=self.build_ang)
+        fracButton = tkinter.Button(self.headerFrame, text="Fraction Reducer", command=self.build_frac)
         expButton.grid(row=0)
         fibButton.grid(row=0, column=1)
         angButton.grid(row=0, column=2)
+        fracButton.grid(row=0, column=3)
 
     def build_exp(self):
         self.clearFrame(self.calcFrame)
@@ -83,6 +85,22 @@ class Application(tkinter.Frame):
         calcAngle.grid(row=4)
         self.answer.grid(row=5)
 
+    def build_frac(self):
+        self.clearFrame(self.calcFrame)
+        self.clearFrame(self.answerFrame)
+        L1 = tkinter.Label(self.calcFrame, text="Numerator")
+        L2 = tkinter.Label(self.calcFrame, text="Denominator")
+        self.numerator = tkinter.Entry(self.calcFrame, width=5)
+        self.denominator = tkinter.Entry(self.calcFrame, width=5)
+        calcReduce = tkinter.Button(self.calcFrame, text="Reduce", command=self.calculateReduce)
+        self.reduceFinal = tkinter.Label(self.answerFrame, wraplength=300, justify="left")
+        L1.grid(row=1)
+        self.numerator.grid(row=1, column=1)
+        L2.grid(row=2)
+        self.denominator.grid(row=2, column=1)
+        calcReduce.grid(row=3)
+        self.reduceFinal.grid(row=4)
+
     def calculateExpMethod(self):
         self.product["text"] = "Answer: " + str("{:,}".format((int(self.baseNum.get())**int(self.expNum.get()))))
 
@@ -121,6 +139,16 @@ class Application(tkinter.Frame):
     def readMath(self, passMath):
         return  eval(passMath.lower().replace('pi', 'math.pi'))
 
+    def calculateReduce(self):
+        num = int(self.numerator.get())
+        denom = int(self.denominator.get())
+        for i in range(2, denom+1):
+            while num%i == 0 and denom%i == 0:
+                num = num/i
+                denom = denom/i
+        num = round(num)
+        denom = round(denom)
+        self.reduceFinal["text"] = "Reduced: " + str(num) + '/' + str(denom)
 
 root = tkinter.Tk()
 app = Application(master=root)
