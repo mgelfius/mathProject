@@ -13,6 +13,8 @@ class Application(tkinter.Frame):
         self.create_widgets()
         self.calcFrame = tkinter.Frame()
         self.calcFrame.pack()
+        self.answerFrame = tkinter.Frame()
+        self.answerFrame.pack()
         self.build_exp()
 
     def clearFrame(self, frame):
@@ -29,12 +31,13 @@ class Application(tkinter.Frame):
 
     def build_exp(self):
         self.clearFrame(self.calcFrame)
+        self.clearFrame(self.answerFrame)
         L1 = tkinter.Label(self.calcFrame, text = "Base number")
         self.baseNum = tkinter.Entry(self.calcFrame, width="10")
         L2 = tkinter.Label(self.calcFrame, text = "Exponent")
         self.expNum = tkinter.Entry(self.calcFrame, width="10")
         calcExp = tkinter.Button(self.calcFrame, text="Exponentiate", command=self.calculateExpMethod)
-        self.product = tkinter.Label(self.calcFrame)
+        self.product = tkinter.Label(self.answerFrame, wraplength=300, justify="left")
         L1.grid(row=1)
         self.baseNum.grid(row=1, column=1)
         L2.grid(row=2)
@@ -44,10 +47,11 @@ class Application(tkinter.Frame):
 
     def build_fib(self):
         self.clearFrame(self.calcFrame)
+        self.clearFrame(self.answerFrame)
         L1 = tkinter.Label(self.calcFrame, text="Index of Fibonacci")
         self.fibNum = tkinter.Entry(self.calcFrame, width="10")
         calcFib = tkinter.Button(self.calcFrame, text="Find Fibonacci", command=self.calculateFib)
-        self.final = tkinter.Label(self.calcFrame)
+        self.final = tkinter.Label(self.answerFrame, wraplength=300, justify="left")
         L1.grid(row=1)
         self.fibNum.grid(row=1, column=1)
         calcFib.grid(row=2)
@@ -55,6 +59,7 @@ class Application(tkinter.Frame):
 
     def build_ang(self):
         self.clearFrame(self.calcFrame)
+        self.clearFrame(self.answerFrame)
         self.v = tkinter.IntVar()
         self.r = tkinter.IntVar()
         self.degRadio = tkinter.Radiobutton(self.calcFrame, text="Degrees", value=1, width=10, variable=self.r)
@@ -67,7 +72,7 @@ class Application(tkinter.Frame):
         self.v.set(1)
         self.r.set(1)
         calcAngle = tkinter.Button(self.calcFrame, text="Calculate", command=self.calculateAng)
-        self.answer = tkinter.Label(self.calcFrame)
+        self.answer = tkinter.Label(self.answerFrame, wraplength=300, justify="left")
         L1.grid(row = 1)
         self.angNum.grid(row=1, column=1)
         self.degRadio.grid(row=2, column=0)
