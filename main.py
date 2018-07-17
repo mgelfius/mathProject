@@ -137,7 +137,10 @@ class Application(tkinter.Frame):
             return self.fib(n - 2) + self.fib(n - 1)
 
     def readMath(self, passMath):
-        return  eval(passMath.lower().replace('pi', 'math.pi'))
+        passMath = passMath.lower()
+        for r in (('pi', 'math.pi'), ('^', '**'), ('sqrt', 'math.sqrt'), ('e', 'math.e')):
+            passMath = passMath.replace(*r)
+        return  eval(passMath)
 
     def calculateReduce(self):
         num = int(self.numerator.get())
