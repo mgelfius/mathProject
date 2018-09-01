@@ -1,6 +1,7 @@
 import tkinter
 import math
 from decimal import Decimal
+import re
 
 class Application(tkinter.Frame):
     def __init__(self, master=None):
@@ -127,19 +128,26 @@ class Application(tkinter.Frame):
         
 
     def fib(self, n):
-        if n <= 0:
-            return 0
-        if n == 1:
-            return 1
-        if n == 2:
-            return 1
-        else:
-            return self.fib(n - 2) + self.fib(n - 1)
+        hold1 = 1
+        hold2 = 1
+        answer = 0
+        if(n < 2):
+            return n
+        for i in range(2, n):
+            answer = hold1 + hold2
+            hold1 = hold2
+            hold2 = answer
+        return answer
+
 
     def readMath(self, passMath):
         passMath = passMath.lower()
         for r in (('pi', 'math.pi'), ('^', '**'), ('sqrt', 'math.sqrt'), ('e', 'math.e')):
             passMath = passMath.replace(*r)
+        prog = re.compile('\((.+)\)!')
+        result = prog.match(passMath)
+        if result != None:
+            passMath = passMath.replace(str(result[0]), 'math.factorial(' + str(result[1]) + ')')
         return  eval(passMath)
 
     def calculateReduce(self):
